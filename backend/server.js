@@ -4,11 +4,8 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
-
-// ==================== AGENTIC AI ORCHESTRATION ====================
 
 class AIAgent {
   constructor() {
@@ -24,8 +21,6 @@ class AIAgent {
   async processRequest(request, context) {
     const { type, action, data, clientId } = request;
     
-    console.log(`[AI Agent] Processing ${type}:${action} for client ${clientId}`);
-
     if (!this.capabilities[type]) {
       return { error: 'Unknown request type', code: 'INVALID_TYPE' };
     }
@@ -39,7 +34,6 @@ class AIAgent {
   }
 }
 
-// Appointment Agent
 class AppointmentAgent {
   async execute(action, data, context) {
     const { clientId } = context;
@@ -58,7 +52,6 @@ class AppointmentAgent {
   }
 }
 
-// Billing Agent
 class BillingAgent {
   async execute(action, data, context) {
     const { clientId } = context;
@@ -77,7 +70,6 @@ class BillingAgent {
   }
 }
 
-// Coordination Agent
 class CoordinationAgent {
   async execute(action, data, context) {
     const { clientId } = context;
@@ -100,7 +92,6 @@ class CoordinationAgent {
   }
 }
 
-// Documentation Agent
 class DocumentationAgent {
   async execute(action, data, context) {
     const { clientId } = context;
@@ -114,7 +105,6 @@ class DocumentationAgent {
   }
 }
 
-// Family Agent
 class FamilyAgent {
   async execute(action, data, context) {
     const { clientId } = context;
@@ -128,7 +118,6 @@ class FamilyAgent {
   }
 }
 
-// In-memory database
 const db = {
   clients: [
     {
@@ -165,14 +154,10 @@ const db = {
 
 const aiAgent = new AIAgent();
 
-// ==================== API ROUTES ====================
-
-// Health Check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', message: 'CWIN LifeCycle Admin API is running' });
 });
 
-// Clients
 app.get('/api/clients', (req, res) => {
   res.json(db.clients);
 });
@@ -183,7 +168,6 @@ app.get('/api/clients/:id', (req, res) => {
   res.json(client);
 });
 
-// Appointments
 app.get('/api/appointments', (req, res) => {
   const clientId = req.query.clientId;
   const appointments = clientId
@@ -192,7 +176,6 @@ app.get('/api/appointments', (req, res) => {
   res.json(appointments);
 });
 
-// Bills
 app.get('/api/bills', (req, res) => {
   const clientId = req.query.clientId;
   const bills = clientId
@@ -201,7 +184,6 @@ app.get('/api/bills', (req, res) => {
   res.json(bills);
 });
 
-// Tasks
 app.get('/api/tasks', (req, res) => {
   const clientId = req.query.clientId;
   const tasks = clientId
@@ -210,7 +192,6 @@ app.get('/api/tasks', (req, res) => {
   res.json(tasks);
 });
 
-// AI Request Endpoint
 app.post('/api/ai/request', async (req, res) => {
   try {
     const { type, action, data } = req.body;
@@ -232,7 +213,6 @@ app.post('/api/ai/request', async (req, res) => {
   }
 });
 
-// Root endpoint
 app.get('/', (req, res) => {
   res.json({
     name: 'CWIN LifeCycle Admin API',
@@ -249,7 +229,6 @@ app.get('/', (req, res) => {
   });
 });
 
-// 404 Handler
 app.use((req, res) => {
   res.status(404).json({
     error: 'Route not found',
@@ -266,20 +245,16 @@ app.use((req, res) => {
   });
 });
 
-// Error Handler
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: 'Internal server error', message: err.message });
 });
 
-// FOR LOCAL DEVELOPMENT
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 5000;
   app.listen(PORT, () => {
     console.log(`✓ CWIN LifeCycle Admin API running on http://localhost:${PORT}`);
-    console.log(`✓ Try: http://localhost:${PORT}/api/health`);
   });
 }
 
-// FOR VERCEL SERVERLESS - CRITICAL!
 module.exports = app;
