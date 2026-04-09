@@ -1,20 +1,21 @@
-# CWIN LifeCycle Admin - Complete Platform
+# CWIN LifeCycle Admin
 
-AI-powered care coordination platform with frontend and backend.
+AI-powered care coordination platform with React frontend and Express.js API.
 
-## What's Included
+## Features
 
-- ✅ React Frontend (auto-deployed)
-- ✅ Express.js Backend API
-- ✅ 5 AI Agents (Appointment, Billing, Coordination, Documentation, Family)
-- ✅ In-memory database with demo data
-- ✅ Vercel configuration
+- Beautiful React homepage
+- Express.js REST API
+- 5 AI Agents (Appointment, Billing, Coordination, Documentation, Family)
+- Demo data included
+- Vercel deployment ready
 
-## Deploy Instructions
+## Deploy to Vercel
 
 1. Push to GitHub
-2. Vercel auto-deploys
-3. Frontend and API both live
+2. Connect to Vercel
+3. Auto-deploys on push
+4. Frontend and API both live
 
 ## API Endpoints
 
@@ -25,9 +26,19 @@ AI-powered care coordination platform with frontend and backend.
 - GET /api/tasks
 - POST /api/ai/request
 
-## Demo Data
+## Quick Start Local
 
-Clients: Margaret Chen, Robert Williams
-Appointments, Bills, and Tasks included
+```bash
+npm install
+npm start
+```
 
-Ready for production!
+API runs on http://localhost:5000
+
+## Production
+
+Deployed on Vercel with:
+- Frontend: React (static)
+- Backend: Node.js (serverless)
+- Environment: Production
+- Status: Active
